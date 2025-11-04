@@ -1,0 +1,19 @@
+
+package com.travelgo.app.data.remote
+
+import com.travelgo.app.data.local.SessionManager
+import kotlinx.coroutines.runBlocking
+import okhttp3.Interceptor
+import okhttp3.Response
+
+class AuthInterceptor(private val sessionManager: SessionManager) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val original = chain.request()
+        val token = runBlocking { sessionManager.getAuthToken() }
+        if (token.isNullOrEmpty()) return chain.proceed(original)
+        val req = original.newBuilder()
+            .header("Authorization", "Bearer $token")
+            .build()
+        return chain.proceed(req)
+    }
+}
