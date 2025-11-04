@@ -1,4 +1,0 @@
-<resources>
-    <!-- Tema declarado via Compose (TravelGoTheme) -->
-    <style name="Theme.TravelGo" parent="android:Theme.Material.Light.NoActionBar" />
-</resources>
